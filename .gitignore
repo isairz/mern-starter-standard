@@ -8,3 +8,9 @@ public/*
 dist
 coverage/
 .nyc_output/
+
+.travis.yml
+Dockerfile
+Dockerfile-development
+docker-compose-development.yml
+docker-compose.yml
