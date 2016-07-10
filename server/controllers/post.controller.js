@@ -1,7 +1,7 @@
-import Post from '../models/post';
-import cuid from 'cuid';
-import slug from 'limax';
-import sanitizeHtml from 'sanitize-html';
+import Post from '../models/post'
+import cuid from 'cuid'
+import slug from 'limax'
+import sanitizeHtml from 'sanitize-html'
 
 /**
  * Get all posts
@@ -9,13 +9,13 @@ import sanitizeHtml from 'sanitize-html';
  * @param res
  * @returns void
  */
-export function getPosts(req, res) {
+export function getPosts (req, res) {
   Post.find().sort('-dateAdded').exec((err, posts) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send(err)
     }
-    res.json({ posts });
-  });
+    res.json({ posts })
+  })
 }
 
 /**
@@ -24,26 +24,26 @@ export function getPosts(req, res) {
  * @param res
  * @returns void
  */
-export function addPost(req, res) {
+export function addPost (req, res) {
   if (!req.body.post.name || !req.body.post.title || !req.body.post.content) {
-    res.status(403).end();
+    res.status(403).end()
   }
 
-  const newPost = new Post(req.body.post);
+  const newPost = new Post(req.body.post)
 
   // Let's sanitize inputs
-  newPost.title = sanitizeHtml(newPost.title);
-  newPost.name = sanitizeHtml(newPost.name);
-  newPost.content = sanitizeHtml(newPost.content);
+  newPost.title = sanitizeHtml(newPost.title)
+  newPost.name = sanitizeHtml(newPost.name)
+  newPost.content = sanitizeHtml(newPost.content)
 
-  newPost.slug = slug(newPost.title.toLowerCase(), { lowercase: true });
-  newPost.cuid = cuid();
+  newPost.slug = slug(newPost.title.toLowerCase(), { lowercase: true })
+  newPost.cuid = cuid()
   newPost.save((err, saved) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send(err)
     }
-    res.json({ post: saved });
-  });
+    res.json({ post: saved })
+  })
 }
 
 /**
@@ -52,13 +52,13 @@ export function addPost(req, res) {
  * @param res
  * @returns void
  */
-export function getPost(req, res) {
+export function getPost (req, res) {
   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send(err)
     }
-    res.json({ post });
-  });
+    res.json({ post })
+  })
 }
 
 /**
@@ -67,14 +67,14 @@ export function getPost(req, res) {
  * @param res
  * @returns void
  */
-export function deletePost(req, res) {
+export function deletePost (req, res) {
   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).send(err)
     }
 
     post.remove(() => {
-      res.status(200).end();
-    });
-  });
+      res.status(200).end()
+    })
+  })
 }

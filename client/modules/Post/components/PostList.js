@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 // Import Components
-import PostListItem from './PostListItem/PostListItem';
+import PostListItem from './PostListItem/PostListItem'
 
-function PostList(props) {
+function PostList (props) {
   return (
-    <div className="listView">
+    <div className='listView'>
       {
         props.posts.map(post => (
           <PostListItem
@@ -16,7 +16,7 @@ function PostList(props) {
         ))
       }
     </div>
-  );
+  )
 }
 
 PostList.propTypes = {
@@ -28,6 +28,6 @@ PostList.propTypes = {
     cuid: PropTypes.string.isRequired,
   })).isRequired,
   handleDeletePost: PropTypes.func.isRequired,
-};
+}
 
-export default PostList;
+export default PostList
